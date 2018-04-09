@@ -46,7 +46,7 @@ module.exports = {
         <StackLayout class="p-20" v-if="this.distance > 0">
             <FlexboxLayout flexDirection="row" justifyContent="left" v-for="unit in units">
                 <Label class="" textWrap=true :text="'Distance in '+unit.name+': '"/>
-                <Label class="" style="font-weight:bold;" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
+                <Label class="font-weight-bold" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
             </FlexboxLayout>
         </StackLayout>
       </StackLayout>
