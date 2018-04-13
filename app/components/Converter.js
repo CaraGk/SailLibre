@@ -40,6 +40,10 @@ module.exports = {
         },
     },
   template: `
+    <Page class="page">
+      <ActionBar class="action-bar" :title="$route.meta.title">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$router.back()" />
+      </ActionBar>
       <StackLayout>
         <TextField v-model="distance" hint="Enter distance..." keyboardType="number"/>
         <SegmentedBar :items="segmentedUnits" v-model="selectedUnitIndex"/>
@@ -50,5 +54,6 @@ module.exports = {
             </FlexboxLayout>
         </StackLayout>
       </StackLayout>
+    </Page>
   `,
 };

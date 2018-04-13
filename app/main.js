@@ -1,6 +1,14 @@
 const Vue = require('nativescript-vue');
-const App = require('./components/App');
+const VueRouter = require('vue-router');
+Vue.use(VueRouter);
+const routes = require('./components/Routes');
+
+const router = new VueRouter({
+  pageRouting: true,
+  routes: routes,
+});
+router.replace('/home');
 
 new Vue({
-  render: h => h(App),
+  router
 }).$start();
