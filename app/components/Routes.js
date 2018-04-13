@@ -7,7 +7,7 @@ module.exports = [
         {
             path: '/converter',
             component: require('./Converter'),
-            meta: {title: 'Distance converter'}
+            meta: {title: 'Unit converters'}
         },
         {
             path: '*',

@@ -1,8 +1,12 @@
 module.exports = {
   data() {
     return {
-      distance: "",
-      units: [
+      converters: ["Distance", "Speed"],
+      selectedConverterIndex: number = 0,
+      isSelectedConverter: bool = true,
+      measurement: "",
+      units: {
+        "Distance": [
           {
               "name": "nautical miles",
               "short": "nm",
@@ -18,7 +22,15 @@ module.exports = {
               "short": "km",
               "convert": [1.852, 1.609344, 1],
           }
-      ],
+        ],
+        "Speed": [
+          {
+            "name": "knots",
+            "short": "kts",
+            "convert": [1],
+          },
+        ],
+      },
       selectedUnitIndex: number = 0,
     };
   },
@@ -26,7 +38,8 @@ module.exports = {
       segmentedUnits () {
         var segmentedBarModule = require("ui/segmented-bar");
         var segmentedBar = [];
-        this.units.forEach(function(unit) {
+        var units = this.units[this.converters[this.selectedConverterIndex]];
+        units.forEach(function(unit) {
           let item = new segmentedBarModule.SegmentedBarItem();
           item.title = unit.short;
           segmentedBar.push(item);
@@ -36,7 +49,7 @@ module.exports = {
   },
     methods: {
         convert(c) {
-            return Math.round(this.distance*c*100)/100;
+            return Math.round(this.measurement*c*100)/100;
         },
     },
   template: `
@@ -44,15 +57,19 @@ module.exports = {
       <ActionBar class="action-bar" :title="$route.meta.title">
         <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$router.back()" />
       </ActionBar>
-      <StackLayout>
-        <TextField v-model="distance" hint="Enter distance..." keyboardType="number"/>
+      <StackLayout v-if="selectedConverterIndex !== null">
+        <Button :text="converters[selectedConverterIndex]" @tap="selectedConverterIndex=null"/>
+        <TextField v-model="measurement" hint="Enter measurement..." keyboardType="number"/>
         <SegmentedBar :items="segmentedUnits" v-model="selectedUnitIndex"/>
-        <StackLayout class="p-20" v-if="this.distance > 0">
-            <FlexboxLayout flexDirection="row" justifyContent="left" v-for="unit in units">
-                <Label class="" textWrap=true :text="'Distance in '+unit.name+': '"/>
-                <Label class="font-weight-bold" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
+        <StackLayout class="p-20" v-if="measurement > 0">
+            <FlexboxLayout flexDirection="row" justifyContent="left" v-for="unit in units[converters[selectedConverterIndex]]">
+                <Label class="push-left" textWrap=true :text="converters[selectedConverterIndex]+' in '+unit.name+': '"/>
+                <Label class="font-weight-bold push-right" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
             </FlexboxLayout>
         </StackLayout>
+      </StackLayout>
+      <StackLayout v-else>
+        <Button v-for="(converter, id) in converters" :text="converter" @tap="selectedConverterIndex=id"/>
       </StackLayout>
     </Page>
   `,
