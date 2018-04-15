@@ -11,7 +11,9 @@ const router = new VueRouter({
 });
 router.replace('/home');
 
-const i18n = new VueI18n();
+const i18n = new VueI18n({
+    locale: 'en',
+});
 
 new Vue({
   i18n,

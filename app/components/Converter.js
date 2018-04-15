@@ -54,7 +54,7 @@ module.exports = {
     },
   template: `
     <Page class="page">
-      <ActionBar class="action-bar" :title="$route.meta.title">
+      <ActionBar class="action-bar" :title="$t('title')">
         <NavigationButton text="Back" android.systemIcon="ic_menu_back" @tap="$router.back()" />
       </ActionBar>
       <StackLayout v-if="selectedConverterIndex !== null">
@@ -77,9 +77,11 @@ module.exports = {
     locale: 'fr',
     messages: {
       en: {
+        title: 'Unit converters',
         measurementPlaceholder: 'Enter measurment...'
       },
       fr: {
+        title: 'Convertisseurs d\'unité',
         measurementPlaceholder: 'Indiquez la mesure...'
       },
     }
