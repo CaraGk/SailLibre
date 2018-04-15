@@ -59,9 +59,9 @@ module.exports = {
       </ActionBar>
       <StackLayout v-if="selectedConverterIndex !== null">
         <Button :text="converters[selectedConverterIndex]" @tap="selectedConverterIndex=null"/>
-        <TextField v-model="measurement" hint="Enter measurement..." keyboardType="number"/>
+        <TextField v-model="measurement" :hint="$t('measurementPlaceholder')" keyboardType="number"/>
         <SegmentedBar :items="segmentedUnits" v-model="selectedUnitIndex"/>
-        <StackLayout class="p-20" v-if="measurement > 0">
+        <StackLayout class="p-10" v-if="measurement > 0">
             <FlexboxLayout flexDirection="row" justifyContent="left" v-for="unit in units[converters[selectedConverterIndex]]">
                 <Label class="push-left" textWrap=true :text="converters[selectedConverterIndex]+' in '+unit.name+': '"/>
                 <Label class="font-weight-bold push-right" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
@@ -73,4 +73,15 @@ module.exports = {
       </StackLayout>
     </Page>
   `,
+  i18n: {
+    locale: 'fr',
+    messages: {
+      en: {
+        measurementPlaceholder: 'Enter measurment...'
+      },
+      fr: {
+        measurementPlaceholder: 'Indiquez la mesure...'
+      },
+    }
+  }
 };
