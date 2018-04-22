@@ -61,11 +61,12 @@ module.exports = {
         <Button :text="converters[selectedConverterIndex]" @tap="selectedConverterIndex=null"/>
         <TextField v-model="measurement" :hint="$t('measurementPlaceholder')" keyboardType="number"/>
         <SegmentedBar :items="segmentedUnits" v-model="selectedUnitIndex"/>
-        <StackLayout class="p-10" v-if="measurement > 0">
-            <FlexboxLayout flexDirection="row" justifyContent="left" v-for="unit in units[converters[selectedConverterIndex]]">
-                <Label class="push-left" textWrap=true :text="converters[selectedConverterIndex]+' in '+unit.name+': '"/>
-                <Label class="font-weight-bold push-right" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
+        <StackLayout class="p-5" v-if="measurement > 0">
+            <FlexboxLayout flexDirection="row" justifyContent="space-between" v-for="unit in units[converters[selectedConverterIndex]]">
+                <Label class="" textWrap=true :text="converters[selectedConverterIndex]+' in '+unit.name+': '"/>
+                <Label class="font-weight-bold" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
             </FlexboxLayout>
+            <Label class="p-10" textWrap=true :text="$t('caution')"/>
         </StackLayout>
       </StackLayout>
       <StackLayout v-else>
@@ -78,11 +79,13 @@ module.exports = {
     messages: {
       en: {
         title: 'Unit converters',
-        measurementPlaceholder: 'Enter measurment...'
+        measurementPlaceholder: 'Enter measurment...',
+        caution: 'All conversions are approximative but should be precise enough for real use.'
       },
       fr: {
         title: 'Convertisseurs d\'unité',
-        measurementPlaceholder: 'Indiquez la mesure...'
+        measurementPlaceholder: 'Indiquez la mesure...',
+        caution: 'Toutes les conversions sont approximatives mais suffisantes pour un usage réel.'
       },
     }
   }
