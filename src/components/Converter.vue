@@ -11,7 +11,7 @@
 
         <StackLayout class="p-5" v-if="measurement > 0">
             <FlexboxLayout flexDirection="row" justifyContent="space-between" v-for="unit in units[converters[selectedConverterIndex]]">
-                <Label class="" textWrap=true :text="converters[selectedConverterIndex]+' in '+unit.name+': '"/>
+                <Label class="" textWrap=true :text="$t('convertText', { converter:$t(converters[selectedConverterIndex]), unit:$t(unit.name) })"/>
                 <Label class="font-weight-bold" :text="convert(unit.convert[selectedUnitIndex])+' '+unit.short"/>
             </FlexboxLayout>
             <Label class="p-10" textWrap=true :text="$t('caution')"/>
@@ -36,24 +36,24 @@ export default {
       units: {
         "Distance": [
           {
-              "name": "nautical miles",
+              "name": 'nautical miles',
               "short": "nm",
               "convert": [1, 1/1.15078, 1/1.852],
           },
           {
-              "name": "miles",
+              "name": 'miles',
               "short": "mi",
               "convert": [1.15078, 1, 1/1.609344],
           },
           {
-              "name": "kilometers",
+              "name": 'kilometers',
               "short": "km",
               "convert": [1.852, 1.609344, 1],
           }
         ],
         "Speed": [
           {
-            "name": "knots",
+            "name": 'knots',
             "short": "kts",
             "convert": [
               1,
@@ -61,7 +61,7 @@ export default {
             ],
           },
           {
-            "name": "beaufort",
+            "name": 'beaufort',
             "short": "bft",
             "convert": [
               {0:1, 1:4, 2:7, 3:11, 4:17, 5:22, 6:28, 7:34, 8:41, 9:48, 10:56, 11:64, 12:120},
@@ -104,7 +104,8 @@ export default {
     },
   },
   mounted: function() {
-    this.$i18n.locale = 'fr';
+    this.$store.commit('update');
+    this.$i18n.locale = this.$store.state.lang.locale;
   }
 };
 </script>
@@ -114,12 +115,28 @@ export default {
       "en": {
         "title": "Unit converters",
         "measurementPlaceholder": "Enter measurment...",
-        "caution": "All conversions are approximative but should be precise enough for real use."
+        "caution": "All conversions are approximative but should be precise enough for real use.",
+        "Distance": "Distance",
+        "Speed": "Speed",
+        "nautical miles": "nautical miles",
+        "miles": "miles",
+        "kilometers": "kilometers",
+        "knots": "knots",
+        "beaufort": "Beaufort",
+        "convertText": "{converter} in {unit}:"
       },
       "fr": {
         "title": "Convertisseurs d'unité",
         "measurementPlaceholder": "Indiquez la mesure...",
-        "caution": "Toutes les conversions sont approximatives mais suffisantes pour un usage réel."
+        "caution": "Toutes les conversions sont approximatives mais suffisantes pour un usage réel.",
+        "Distance": "Distance",
+        "Speed": "Vitesse",
+        "nautical miles": "miles nautiques",
+        "miles": "miles",
+        "kilometers": "kilomètres",
+        "knots": "nœuds",
+        "beaufort": "Beaufort",
+        "convertText": "{converter} en {unit} :"
       }
     }
 </i18n>
