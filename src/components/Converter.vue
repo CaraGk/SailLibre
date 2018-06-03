@@ -55,8 +55,19 @@ export default {
           {
             "name": "knots",
             "short": "kts",
-            "convert": [1],
+            "convert": [
+              1,
+              {1:0, 4:1, 7:2, 11:3, 17:4, 22:5, 28:6, 34:7, 41:8, 48:9, 56:10, 64:11, 120:12},
+            ],
           },
+          {
+            "name": "beaufort",
+            "short": "bft",
+            "convert": [
+              {0:1, 1:4, 2:7, 3:11, 4:17, 5:22, 6:28, 7:34, 8:41, 9:48, 10:56, 11:64, 12:120},
+              {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 11:11, 12:12},
+            ],
+          }
         ],
       },
       selectedUnitIndex: Number = 0,
@@ -77,7 +88,19 @@ export default {
   },
   methods: {
     convert(c) {
-      return Math.round(this.measurement*c*100)/100;
+      if (typeof c == "object") {
+        for (const key of Object.keys(c)) {
+          if (this.measurement >= c[key]) {
+            var value = key;
+          } else if (this.measurement < c[key]) {
+            return value;
+          }
+        }
+      } else if (typeof c == "number") {
+        return Math.round(this.measurement*c*100)/100;
+      } else {
+        return false;
+      }
     },
   },
   mounted: function() {

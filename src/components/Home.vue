@@ -4,7 +4,6 @@
 
     <StackLayout>
       <Button class="btn btn-primary" @tap="$router.push('/converter')">{{ $t('unitconverters') }}</Button>
-      <label>{{ $i18n.locale }}</label>
     </StackLayout>
 
   </Page>
